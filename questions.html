@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="sr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Категорије и питања</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+
+      header {
+        background: #004080;
+        color: white;
+        padding: 20px;
+      }
+
+      nav {
+        background: #e0e0e0;
+        padding: 15px;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      nav ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      nav li {
+        margin: 5px 0;
+      }
+
+      nav a {
+        color: #004080;
+        text-decoration: none;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      h2,
+      h3 {
+        margin-top: 30px;
+      }
+
+      .question-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .question-card {
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 100%;
+        padding: 15px;
+        position: relative;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .highlighted {
+        border: 2px solid gold;
+        background-color: #fffbe6;
+      }
+
+      .points,
+      .multi {
+        font-weight: normal;
+        color: #2c6aa0;
+        font-size: 0.9em;
+        margin: 4px 0;
+      }
+
+      .choice {
+        margin: 5px 0;
+        padding: 5px 0;
+        border-radius: 4px;
+      }
+
+      .correct {
+        background-color: #d4edda;
+      }
+
+      .correct.hidden {
+        background-color: transparent;
+        color: inherit;
+      }
+
+      img {
+        max-width: 100%;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .toggle-answers,
+      .highlight-btn {
+        position: absolute;
+        top: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        color: #555;
+      }
+
+      .toggle-answers:hover,
+      .highlight-btn:hover {
+        color: #000;
+      }
+
+      .toggle-answers {
+        right: 35px;
+      }
+
+      .highlight-btn {
+        right: 10px;
+      }
+
+      #filter-bar {
+        padding: 10px 20px;
+        background: #f1f1f1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .qid {
+        color: grey;
+        font-size: 9pt;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          font-size: 18px;
+        }
+
+        nav {
+          font-size: 1em;
+          max-height: none;
+          padding: 10px;
+        }
+
+        #filter-bar {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 10px;
+          gap: 10px;
+        }
+
+        h1 {
+          font-size: 1.5em;
+        }
+
+        h2,
+        h3 {
+          font-size: 1.2em;
+        }
+
+        .question-grid {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .question-card {
+          max-width: 100%;
+          padding: 18px;
+          font-size: 1.05em;
+          box-sizing: border-box;
+        }
+
+        .toggle-answers,
+        .highlight-btn {
+          font-size: 22px;
+          top: 10px;
+        }
+
+        .points,
+        .multi {
+          font-size: 1em;
+        }
+
+        .choice {
+          font-size: 1.05em;
+          padding: 8px 0;
+        }
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Категорије и питања</h1>
+    </header>
+
+    <div id="filter-bar">
+      <label
+        ><input type="checkbox" id="show-only-highlighted" /> Прикажи само
+        означене</label
+      >
+    </div>
+
+    <nav>
+      <ul id="nav-menu"></ul>
+    </nav>
+
+    <main id="content"></main>
+
+    <script>
+      async function loadData() {
+        const [categories, questions] = await Promise.all([
+          fetch("https://klgleb.github.io/saobracajData/categories.json").then(
+            (res) => res.json()
+          ),
+          fetch(
+            "https://klgleb.github.io/saobracajData/allQuestions.json"
+          ).then((res) => res.json()),
+        ]);
+
+        const contentDiv = document.getElementById("content");
+        const navMenu = document.getElementById("nav-menu");
+        const showOnlyHighlighted = document.getElementById(
+          "show-only-highlighted"
+        );
+
+        const highlighted = new Set(
+          JSON.parse(localStorage.getItem("highlightedQuestions") || "[]")
+        );
+
+        function saveHighlights() {
+          localStorage.setItem(
+            "highlightedQuestions",
+            JSON.stringify([...highlighted])
+          );
+        }
+
+        showOnlyHighlighted.addEventListener("change", () => {
+          document.querySelectorAll(".question-card").forEach((card) => {
+            const qId = card.getAttribute("data-qid");
+            const isHighlighted = highlighted.has(qId);
+            card.style.display =
+              showOnlyHighlighted.checked && !isHighlighted ? "none" : "";
+          });
+        });
+
+        categories.forEach((category) => {
+          const subcatsWithQuestions = category.subcategories
+            .map((subcat) => {
+              const relatedQuestions = questions.filter(
+                (q) =>
+                  q.categoryId === category.id && q.subcategoryId === subcat.Id
+              );
+              return relatedQuestions.length > 0
+                ? { ...subcat, questions: relatedQuestions }
+                : null;
+            })
+            .filter(Boolean);
+
+          if (subcatsWithQuestions.length === 0) return;
+
+          const catId = `cat-${category.id}`;
+          const catHeader = document.createElement("h2");
+          catHeader.textContent = category.name;
+          catHeader.id = catId;
+          contentDiv.appendChild(catHeader);
+
+          const catLi = document.createElement("li");
+          catLi.innerHTML = `<strong><a href="#${catId}">${category.name}</a></strong>`;
+          const subList = document.createElement("ul");
+
+          subcatsWithQuestions.forEach((subcat) => {
+            const subcatId = `subcat-${category.id}-${subcat.Id}`;
+            const subcatHeader = document.createElement("h3");
+            subcatHeader.textContent = subcat.Description;
+            subcatHeader.id = subcatId;
+            contentDiv.appendChild(subcatHeader);
+
+            const subLi = document.createElement("li");
+            subLi.innerHTML = `<a href="#${subcatId}">${subcat.Description}</a> <small>(${subcat.questions.length})</small>`;
+            subList.appendChild(subLi);
+
+            const grid = document.createElement("div");
+            grid.className = "question-grid";
+
+            subcat.questions.forEach((q) => {
+              const card = document.createElement("div");
+              card.className = "question-card";
+              card.setAttribute("data-qid", q.qId);
+              if (highlighted.has(String(q.qId))) {
+                card.classList.add("highlighted");
+              }
+
+              // Toggle answers
+              const toggleBtn = document.createElement("button");
+              toggleBtn.className = "toggle-answers";
+              toggleBtn.innerHTML = "👁️";
+              toggleBtn.title = "Прикажи/сакриј тачне одговоре";
+              toggleBtn.addEventListener("click", () => {
+                card
+                  .querySelectorAll(".correct")
+                  .forEach((el) => el.classList.toggle("hidden"));
+              });
+
+              // Highlight button
+              const highlightBtn = document.createElement("button");
+              highlightBtn.className = "highlight-btn";
+              highlightBtn.innerHTML = "⭐";
+              highlightBtn.title = "Означи питање";
+              highlightBtn.addEventListener("click", () => {
+                const key = String(q.qId);
+                if (highlighted.has(key)) {
+                  highlighted.delete(key);
+                  card.classList.remove("highlighted");
+                } else {
+                  highlighted.add(key);
+                  card.classList.add("highlighted");
+                }
+                saveHighlights();
+                if (showOnlyHighlighted.checked) {
+                  card.style.display = highlighted.has(key) ? "" : "none";
+                }
+              });
+
+              card.append(toggleBtn, highlightBtn);
+
+              const qid = document.createElement("p");
+              qid.className = "qid";
+              qid.textContent = `#${q.qId}`;
+              card.appendChild(qid);
+
+              // Број поена
+              const points = document.createElement("p");
+              points.className = "points";
+              points.textContent = `Број поена: ${q.Points}`;
+              card.appendChild(points);
+
+
+              const text = document.createElement("p");
+              text.textContent = q.Text;
+              card.appendChild(text);
+
+              if (q.HasImage) {
+                const img = document.createElement("img");
+                img.src = `img/${q.qId}.jpeg`;
+                img.alt = "Илустрација";
+                card.appendChild(img);
+              }
+
+              if (q.ChoicesReq > 1) {
+                const multi = document.createElement("p");
+                multi.className = "multi";
+                multi.textContent = `Број потребних одговора: ${q.ChoicesReq}`;
+                card.appendChild(multi);
+              }
+
+              q.Choices.forEach((choice) => {
+                const p = document.createElement("p");
+                p.className = "choice";
+                if (choice.isCorrect) {
+                  p.classList.add("correct", "hidden");
+                }
+                p.textContent = choice.Text;
+                card.appendChild(p);
+              });
+
+              grid.appendChild(card);
+            });
+
+            contentDiv.appendChild(grid);
+          });
+
+          catLi.appendChild(subList);
+          navMenu.appendChild(catLi);
+        });
+      }
+
+      loadData().catch((err) => {
+        document.getElementById("content").textContent =
+          "Грешка при учитавању података.";
+        console.error(err);
+      });
+    </script>
+  </body>
+</html>
