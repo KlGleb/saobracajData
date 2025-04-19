@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Категорије и питања</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <style>
       body {
         font-family: sans-serif;
@@ -33,12 +34,12 @@
         margin: 5px 0;
       }
 
-      nav a {
+      a {
         color: #004080;
         text-decoration: none;
       }
 
-      nav a:hover {
+      a:hover {
         text-decoration: underline;
       }
 
@@ -46,9 +47,16 @@
         padding: 20px;
       }
 
+      h2 {
+        font-size: large;
+      }
+      h3 {
+        font-size: medium;
+      }
       h2,
       h3 {
         margin-top: 30px;
+        font-weight: normal;
       }
 
       .question-grid {
@@ -83,7 +91,7 @@
 
       .choice {
         margin: 5px 0;
-        padding: 5px 0;
+        padding: 5px 5px;
         border-radius: 4px;
       }
 
@@ -103,29 +111,28 @@
         border-radius: 4px;
       }
 
-      .toggle-answers,
+      /* .toggle-answers,
       .highlight-btn {
-        position: absolute;
-        top: 10px;
+        
         background: none;
         border: none;
         cursor: pointer;
         font-size: 18px;
         color: #555;
-      }
+      } */
 
       .toggle-answers:hover,
       .highlight-btn:hover {
         color: #000;
       }
 
-      .toggle-answers {
+      /* .toggle-answers {
         right: 35px;
       }
 
       .highlight-btn {
         right: 10px;
-      }
+      } */
 
       #filter-bar {
         padding: 10px 20px;
@@ -200,29 +207,218 @@
           height: auto;
         }
       }
+
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin: 10px;
+      }
+
+      .tab-button {
+        padding: 8px 16px;
+        border: none;
+        background-color: #eee;
+        cursor: pointer;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: background-color 0.2s ease;
+      }
+
+      .tab-button:hover {
+        background-color: #ddd;
+      }
+
+      .tab-button.active {
+        background-color: #ccc;
+        font-weight: bold;
+      }
+
+      .flag-red {
+        border-left: 6px solid red;
+      }
+      .flag-blue {
+        border-left: 6px solid blue;
+      }
+      .flag-green {
+        border-left: 6px solid green;
+      }
+      .flag-purple {
+        border-left: 6px solid purple;
+      }
+      .flag-btn {
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        border-radius: 4px;
+        /* outline: 2px solid transparent; */
+
+        /* margin-right: 4px; */
+        font-size: 17pt;
+        opacity: 0.3;
+        border-radius: 30px;
+      }
+      .flag-btn:hover {
+        opacity: 1;
+      }
+      .flag-btn.selected {
+        border: 2px dotted #2c6aa0;
+        /* outline: 2px solid #2c6aa0; */
+        border-style: dotted;
+      }
+      .flag-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      .highlight-btn {
+        margin-left: 14px;
+      }
+
+      .filtered-card {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <header>
       <h1>Категорије и питања</h1>
     </header>
-
-    <div id="filter-bar">
-      <label
-        ><input type="checkbox" id="show-only-highlighted" /> Прикажи само
-        означене</label
-      >
-    </div>
-
     <nav>
-      <ul id="nav-menu"></ul>
+      <button id="hide-nav" onclick="_hideNavClick()">Навигација 🔽</button>
+      <ul id="nav-menu" style="display: none"></ul>
     </nav>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Претражи питања..."
+      style="
+        padding: 8px;
+        font-size: 16px;
+        width: 100%;
+        max-width: 400px;
+        margin: 10px 10px;
+      "
+    />
+    <br /><label for="search-input" style="margin: 0px 10px">
+      питања: <span id="questCount"></span
+    ></label>
+
+    <div class="tabs">
+      <button class="tab-button active" data-flag="all">Сви</button>
+      <button class="tab-button" data-flag="star">⭐</button>
+      <button class="tab-button" data-flag="red">🔴</button>
+      <button class="tab-button" data-flag="blue">🔵</button>
+      <button class="tab-button" data-flag="green">🟢</button>
+      <button class="tab-button" data-flag="purple">🟣</button>
+    </div>
 
     <main id="content"></main>
 
     <script>
+      let tabs = document.querySelectorAll(".tab-button");
+      let tabClickListener = (tab) => {
+        // Удалить класс active у всех
+        document.querySelectorAll(".tab-button").forEach((t) => t.classList.remove("active"));
+        // Добавить класс active на выбранную вкладку
+        tab.classList.add("active");
+
+        const selectedFlag = tab.dataset.flag;
+        // Тут можно обработать выбор
+        console.log("Выбрана вкладка:", selectedFlag);
+
+        // toggleFavorites()
+        if (selectedFlag == "star") {
+          toggleFavorites(true);
+          return;
+        } else {
+          toggleFavorites(false);
+        }
+
+        if (parseInt(selectedFlag)) {
+          showQuestionById(parseInt(selectedFlag));
+        } else {
+          document.querySelectorAll(".question-card").forEach((card) => {
+            const flag = card.getAttribute("data-flag") || "all";
+            const show = selectedFlag === "all" || selectedFlag === flag;
+            card.style.display = show ? "" : "none";
+          });
+        }
+
+        updQuestionsQount();
+      };
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => tabClickListener(tab));
+      });
+
+      function toggleFavorites(show) {
+        document.querySelectorAll(".question-card").forEach((card) => {
+          const qId = card.getAttribute("data-qid");
+          const isHighlighted = highlighted.has(qId);
+          card.style.display = show && !isHighlighted ? "none" : "";
+        });
+
+        updQuestionsQount();
+      }
+
+      function _hideNavClick() {
+        let nav = document.querySelector("#nav-menu");
+        let navButton = document.querySelector("#hide-nav");
+        if (nav.style.display == "none") {
+          nav.style.display = "block";
+          navButton.innerHTML = "Навигација 🔼";
+        } else {
+          nav.style.display = "none";
+          navButton.innerHTML = "Навигација 🔽";
+        }
+      }
+
+      function updQuestionsQount() {
+        const allCards = document.querySelectorAll(".question-card");
+        var count = 0;
+        for (var i in allCards) {
+          let card = allCards[i];
+
+          if (
+            card.style &&
+            card.style.display != "none" &&
+            !card.classList.contains("filtered-card")
+          ) {
+            count++;
+          }
+        }
+
+        document.querySelector("#questCount").innerHTML = count;
+
+        hideEmptyCategories();
+      }
+
+      document
+        .getElementById("search-input")
+        .addEventListener("input", function (e) {
+          const query = e.target.value.toLowerCase();
+          const allCards = document.querySelectorAll(".question-card");
+
+          allCards.forEach((card) => {
+            const text = card.innerText.toLowerCase();
+            if (!text.includes(query)) {
+              card.classList.add("filtered-card");
+            } else {
+              card.classList.remove("filtered-card");
+            }
+          });
+
+          updQuestionsQount();
+        });
+      const highlighted = new Set(
+        JSON.parse(localStorage.getItem("highlightedQuestions") || "[]")
+      );
+
+      var categories;
+      var questions;
+
       async function loadData() {
-        const [categories, questions] = await Promise.all([
+        [categories, questions] = await Promise.all([
           fetch("https://klgleb.github.io/saobracajData/categories.json").then(
             (res) => res.json()
           ),
@@ -231,15 +427,55 @@
           ).then((res) => res.json()),
         ]);
 
+        // Вызов при загрузке
+        const qid = getQueryParam("qid");
+
         const contentDiv = document.getElementById("content");
         const navMenu = document.getElementById("nav-menu");
         const showOnlyHighlighted = document.getElementById(
           "show-only-highlighted"
         );
 
-        const highlighted = new Set(
-          JSON.parse(localStorage.getItem("highlightedQuestions") || "[]")
+        const questionFlags = new Map(
+          Object.entries(
+            JSON.parse(localStorage.getItem("questionFlags") || "{}")
+          )
         );
+
+        function saveFlags() {
+          localStorage.setItem(
+            "questionFlags",
+            JSON.stringify(Object.fromEntries(questionFlags))
+          );
+        }
+
+        function updateCardFlag(card, flag) {
+          // Удаляем старые флаги
+          card.classList.remove(
+            "flag-red",
+            "flag-blue",
+            "flag-green",
+            "flag-purple"
+          );
+
+          if (flag) {
+            card.classList.add(`flag-${flag}`);
+            card.setAttribute("data-flag", flag);
+          } else {
+            card.removeAttribute("data-flag");
+          }
+
+          // Обновим визуальный выбор кнопки
+          const allFlagBtns = card.querySelectorAll(".flag-btn");
+          allFlagBtns.forEach((btn) => {
+            const btnFlag = btn.dataset.flag;
+            if (btnFlag === flag) {
+              btn.classList.add("selected");
+            } else {
+              btn.classList.remove("selected");
+            }
+          });
+        }
 
         function saveHighlights() {
           localStorage.setItem(
@@ -247,15 +483,6 @@
             JSON.stringify([...highlighted])
           );
         }
-
-        showOnlyHighlighted.addEventListener("change", () => {
-          document.querySelectorAll(".question-card").forEach((card) => {
-            const qId = card.getAttribute("data-qid");
-            const isHighlighted = highlighted.has(qId);
-            card.style.display =
-              showOnlyHighlighted.checked && !isHighlighted ? "none" : "";
-          });
-        });
 
         categories.forEach((category) => {
           const subcatsWithQuestions = category.subcategories
@@ -298,6 +525,7 @@
 
             subcat.questions.forEach((q) => {
               const card = document.createElement("div");
+              card.id = `question-${q.qId}`;
               card.className = "question-card";
               card.setAttribute("data-qid", q.qId);
               if (highlighted.has(String(q.qId))) {
@@ -306,7 +534,7 @@
 
               // Toggle answers
               const toggleBtn = document.createElement("button");
-              toggleBtn.className = "toggle-answers";
+              toggleBtn.className = "toggle-answers flag-btn";
               toggleBtn.innerHTML = "👁️";
               toggleBtn.title = "Прикажи/сакриј тачне одговоре";
               toggleBtn.addEventListener("click", () => {
@@ -317,7 +545,7 @@
 
               // Highlight button
               const highlightBtn = document.createElement("button");
-              highlightBtn.className = "highlight-btn";
+              highlightBtn.className = "highlight-btn flag-btn";
               highlightBtn.innerHTML = "⭐";
               highlightBtn.title = "Означи питање";
               highlightBtn.addEventListener("click", () => {
@@ -334,12 +562,51 @@
                   card.style.display = highlighted.has(key) ? "" : "none";
                 }
               });
+              // === Флаги ===
+              const flags = ["red", "blue", "green", "purple"];
+              const flagContainer = document.createElement("div");
+              flagContainer.className = "flag-container";
 
-              card.append(toggleBtn, highlightBtn);
+              flags.forEach((flag) => {
+                const btn = document.createElement("button");
+                btn.className = `flag-btn`;
+                btn.textContent = {
+                  red: "🔴",
+                  blue: "🔵",
+                  green: "🟢",
+                  purple: "🟣",
+                }[flag];
+                btn.title = `Означи флагом: ${flag}`;
+                btn.dataset.flag = flag; // <-- важно!
+
+                btn.addEventListener("click", () => {
+                  const key = String(q.qId);
+                  const current = questionFlags.get(key);
+                  const newFlag = current === flag ? null : flag;
+
+                  if (newFlag) {
+                    questionFlags.set(key, newFlag);
+                  } else {
+                    questionFlags.delete(key);
+                  }
+
+                  saveFlags();
+                  updateCardFlag(card, newFlag);
+                });
+
+                flagContainer.appendChild(btn);
+              });
+
+              flagContainer.appendChild(highlightBtn);
+              flagContainer.appendChild(toggleBtn);
+
+              card.appendChild(flagContainer);
+
+              // card.append(toggleBtn, highlightBtn);
 
               const qid = document.createElement("p");
               qid.className = "qid";
-              qid.textContent = `#${q.qId}`;
+              qid.innerHTML = `<a href="?qid=${q.qId}">#${q.qId}</a>`;
               card.appendChild(qid);
 
               // Број поена
@@ -347,7 +614,6 @@
               points.className = "points";
               points.textContent = `Број поена: ${q.Points}`;
               card.appendChild(points);
-
 
               const text = document.createElement("p");
               text.textContent = q.Text;
@@ -377,6 +643,11 @@
                 card.appendChild(p);
               });
 
+              const savedFlag = questionFlags.get(String(q.qId));
+              if (savedFlag) {
+                updateCardFlag(card, savedFlag);
+              }
+
               grid.appendChild(card);
             });
 
@@ -386,6 +657,98 @@
           catLi.appendChild(subList);
           navMenu.appendChild(catLi);
         });
+        if (qid) {
+          tabs.forEach((t) => t.classList.remove("active"));
+          //<button class="tab-button" data-flag="purple">🟣</button>
+          const button = document.createElement("button");
+          button.classList.add("tab-button");
+          button.classList.add("active");
+          button.innerHTML = `Питање број ${qid}`;
+          button.setAttribute("data-flag", qid);
+          button.addEventListener("click", () => tabClickListener(button));
+
+          document.querySelector(".tabs").appendChild(button);
+          console.log("Add button");
+          showQuestionById(qid);
+
+          // const q = questions.find((q) => {
+          //   q.qId == qid;
+          // });
+        }
+
+        updQuestionsQount();
+      }
+
+      function hideEmptyCategories() {
+        // Сначала скрываем все h3 (подкатегории), у которых нет видимых карточек
+        document.querySelectorAll("main h3").forEach((subcatHeading) => {
+          const grid = subcatHeading.nextElementSibling;
+          if (grid && grid.classList.contains("question-grid")) {
+            const hasVisible = Array.from(grid.children).some(
+              (card) =>
+                card.style.display !== "none" &&
+                !card.classList.contains("filtered-card")
+            );
+            if (!hasVisible) {
+              subcatHeading.style.display = "none";
+              grid.style.display = "none";
+            } else {
+              subcatHeading.style.display = "";
+              grid.style.display = "";
+            }
+          }
+        });
+
+        // Затем скрываем h2 (категории), если все их подкатегории скрыты
+        document.querySelectorAll("main h2").forEach((catHeading) => {
+          let sibling = catHeading.nextElementSibling;
+          let hasVisibleSubcat = false;
+          while (sibling && sibling.tagName !== "H2") {
+            if (sibling.tagName === "H3" && sibling.style.display !== "none") {
+              hasVisibleSubcat = true;
+              break;
+            }
+            sibling = sibling.nextElementSibling;
+          }
+          catHeading.style.display = hasVisibleSubcat ? "" : "none";
+        });
+      }
+
+      function checkSubcategoryShown(questions) {
+        subcatsWithQuestions.forEach((q) => {
+          let card = document.querySelector(`#question-${q.qId}`);
+          if (
+            card &&
+            card.style &&
+            card.style.display != "none" &&
+            !card.classList.contains("filtered-card")
+          ) {
+            return true;
+          }
+        });
+        return false;
+      }
+
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      function showQuestionById(qid) {
+        const allCards = document.querySelectorAll(".question-card");
+
+        allCards.forEach((card) => {
+          if (card.getAttribute("data-qid") != qid) {
+            card.style.display = "none";
+          } else {
+            card.style.display = "";
+          }
+        });
+
+        // const questionCard = document.querySelector(`question-${qid}`);
+        // if(questionCard) {
+        //   questionCard.classList.remove("filtered-card");
+        // }
       }
 
       loadData().catch((err) => {
