@@ -419,11 +419,11 @@
 
       async function loadData() {
         [categories, questions] = await Promise.all([
-          fetch("https://klgleb.github.io/saobracajData/categories.json").then(
+          fetch("categories.json").then(
             (res) => res.json()
           ),
           fetch(
-            "https://klgleb.github.io/saobracajData/allQuestions.json"
+            "allQuestions.json"
           ).then((res) => res.json()),
         ]);
 
