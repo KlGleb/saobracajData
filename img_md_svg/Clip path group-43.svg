@@ -1,0 +1,9 @@
+<svg width="145" height="70" viewBox="0 0 145 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_219_580" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="145" height="70">
+<path d="M0.709961 69.51H144.708V0.859208H0.709961V69.51Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_219_580)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M72.709 43.753L134.583 69.511L144.709 65.313L140.546 54.988L93.071 35.241L140.546 15.385L144.709 5.05598L134.583 0.858983L72.709 26.733L10.836 0.858983L0.709961 5.05598L4.87196 15.385L52.347 35.241L4.87196 54.988L0.709961 65.313L10.836 69.511L72.709 43.753Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M62.583 35.241L7.911 58.05L5.771 63.157L10.836 65.313L72.709 39.44L134.583 65.313L139.648 63.157L137.621 58.05L82.949 35.241L137.621 12.433L139.648 7.21299L134.583 5.05598L72.709 30.93L10.836 5.05598L5.771 7.21299L7.911 12.433L62.583 35.241Z" fill="white"/>
+</g>
+</svg>

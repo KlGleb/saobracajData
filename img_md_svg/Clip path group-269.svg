@@ -1,0 +1,21 @@
+<svg width="69" height="115" viewBox="0 0 69 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_219_11751" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="69" height="115">
+<path d="M0.560059 114.51H68.8605V0.855028H0.560059V114.51Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_219_11751)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M29.8301 0.853955L24.5231 25.252H44.8971L39.5901 0.853955H29.8301Z" fill="#EB3D00"/>
+<path d="M29.8305 0.856457L24.524 25.2539H44.8974L39.5909 0.856457H29.8305Z" stroke="#EB3D00" stroke-width="0.143256" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M24.5231 25.252L19.2141 49.5H50.2071L44.8971 25.252H24.5231Z" fill="white"/>
+<path d="M50.207 49.5023L44.8975 25.2539" stroke="#24211D" stroke-width="0.143256" stroke-linejoin="round"/>
+<path d="M24.524 25.2539L19.2135 49.5023" stroke="#24211D" stroke-width="0.143256" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19.2141 49.5H50.2071L55.5171 73.897H13.7611L19.2141 49.5Z" fill="#EB3D00"/>
+<path d="M19.2135 49.5023H50.2069L55.5173 73.8998H13.7611L19.2135 49.5023Z" stroke="#EB3D00" stroke-width="0.143256" stroke-linejoin="round"/>
+<path d="M8.45166 98.2963L13.7611 73.8998" stroke="#24211D" stroke-width="0.143256" stroke-linejoin="round"/>
+<path d="M55.5173 73.8998L60.8258 98.2963" stroke="#24211D" stroke-width="0.143256" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.560059 114.51H68.8605V110.493H0.560059V114.51Z" fill="#EB3D00"/>
+<path d="M0.560303 114.512H68.861V110.495H0.560303V114.512Z" stroke="#EB3D00" stroke-width="0.143256" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.560059 110.493L3.86106 104.752H65.5601L68.8611 110.493H0.560059Z" fill="#D53F0A"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M62.263 104.752L60.825 98.2949H8.45103L7.01501 104.752H62.263Z" fill="#EB3D00"/>
+<path d="M62.2631 104.754L60.8258 98.2963H8.45159L7.01526 104.754H62.2631Z" stroke="#EB3D00" stroke-width="0.143256" stroke-linejoin="round"/>
+</g>
+</svg>

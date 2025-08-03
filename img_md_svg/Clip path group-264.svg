@@ -1,0 +1,19 @@
+<svg width="171" height="115" viewBox="0 0 171 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_219_11621" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="171" height="115">
+<path d="M0.809998 114.11H170.262V0.454979H0.809998V114.11Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_219_11621)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.5071 26.142H18.3561V112.386H11.5071V26.142ZM152.859 26.142H159.565V112.386H152.859V26.142Z" fill="white"/>
+<path d="M11.5065 26.1424H18.3561V112.387H11.5065V26.1424ZM152.859 26.1424H159.565V112.387H152.859V26.1424Z" stroke="#24211D" stroke-width="0.142919" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.810059 114.11H29.0519V111.24H0.810059V114.11Z" fill="#24211D"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M142.021 114.11H170.263V111.24H142.021V114.11Z" fill="#24211D"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.810059 28.8679H170.262V0.453125H0.810059V28.8679Z" fill="white"/>
+<path d="M0.809814 28.8691H170.263V0.454224H0.809814V28.8691Z" stroke="#24282B" stroke-width="0.142919" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M142.021 28.8679L156.141 14.6629L142.021 0.453955H156.141L170.263 14.6629L156.141 28.8679H142.021Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M113.779 28.8679L127.9 14.6629L113.779 0.453955H127.9L142.021 14.6629L127.9 28.8679H113.779Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M85.536 28.8679L99.656 14.6629L85.536 0.453955H99.656L113.779 14.6629L99.656 28.8679H85.536Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M57.2941 28.8679L71.4141 14.6629L57.2941 0.453955H71.4141L85.5361 14.6629L71.4141 28.8679H57.2941Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M29.052 28.8679L43.173 14.6629L29.052 0.453955H43.173L57.294 14.6629L43.173 28.8679H29.052Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.810059 28.8679L14.9311 14.6629L0.810059 0.453955H14.9311L29.0521 14.6629L14.9311 28.8679H0.810059Z" fill="#EB3D00"/>
+</g>
+</svg>

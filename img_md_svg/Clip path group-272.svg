@@ -1,0 +1,21 @@
+<svg width="121" height="81" viewBox="0 0 121 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_219_11830" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="121" height="81">
+<path d="M0.909912 80.5601H120.56V0.608843H0.909912V80.5601Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_219_11830)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M89.0078 75.4131H110.039V0.609575H89.0078V75.4131Z" fill="white"/>
+<path d="M89.0083 75.4153H110.039V0.611772H89.0083V75.4153Z" stroke="#24211D" stroke-width="0.0999718" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.4258 75.4131H32.4574V0.609575H11.4258V75.4131Z" fill="white"/>
+<path d="M11.4255 75.4153H32.457V0.611772H11.4255V75.4153Z" stroke="#24211D" stroke-width="0.0999718" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.909912 80.5601H42.9739L37.9149 75.413H5.9679L0.909912 80.5601Z" fill="#24211D"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M78.4919 80.5601H120.556L115.498 75.413H83.55L78.4919 80.5601Z" fill="#24211D"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M89.0078 0.609228V22.0112L110.04 0.609228H89.0078Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M89.0078 32.7102L110.04 11.3102V22.0111L89.0078 43.4102V32.7102Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M110.04 32.7102V43.4102L89.0078 64.7112V54.0102L110.04 32.7102Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M110.04 75.4131V54.0101L89.0078 75.4131H110.04Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.4258 75.4131V54.0101L32.4568 75.4131H11.4258Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.4258 32.7102V43.4102L32.4568 64.7112V54.0102L11.4258 32.7102Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M32.4568 32.7102L11.4258 11.3102V22.0111L32.4568 43.4102V32.7102Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M32.4568 0.609228V22.0112L11.4258 0.609228H32.4568Z" fill="#EB3D00"/>
+</g>
+</svg>

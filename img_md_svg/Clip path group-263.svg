@@ -1,0 +1,19 @@
+<svg width="170" height="115" viewBox="0 0 170 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_219_11605" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="170" height="115">
+<path d="M0.0100098 114.11H169.462V0.454979H0.0100098V114.11Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_219_11605)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M152.059 26.142H158.765V111.813H152.059V26.142ZM10.707 26.142H17.556V111.813H10.707V26.142Z" fill="white"/>
+<path d="M152.059 26.1424H158.766V111.813H152.059V26.1424ZM10.7067 26.1424H17.5563V111.813H10.7067V26.1424Z" stroke="#24211D" stroke-width="0.142919" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.0100098 28.8679H169.462V0.453125H0.0100098V28.8679Z" fill="white"/>
+<path d="M0.00994873 28.8691H169.462V0.454224H0.00994873V28.8691Z" stroke="#24211D" stroke-width="0.142919" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.0100098 114.11H28.2518V111.24H0.0100098V114.11Z" fill="#24211D"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M141.221 114.11H169.463V111.24H141.221V114.11Z" fill="#24211D"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M28.252 28.8679L14.131 14.6629L28.252 0.453955H14.131L0.0100098 14.6629L14.131 28.8679H28.252Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M56.494 28.8679L42.373 14.6629L56.494 0.453955H42.373L28.252 14.6629L42.373 28.8679H56.494Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M84.736 28.8679L70.614 14.6629L84.736 0.453955H70.614L56.494 14.6629L70.614 28.8679H84.736Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M112.979 28.8679L98.856 14.6629L112.979 0.453955H98.856L84.736 14.6629L98.856 28.8679H112.979Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M141.221 28.8679L127.1 14.6629L141.221 0.453955H127.1L112.979 14.6629L127.1 28.8679H141.221Z" fill="#EB3D00"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M169.463 28.8679L155.341 14.6629L169.463 0.453955H155.341L141.221 14.6629L155.341 28.8679H169.463Z" fill="#EB3D00"/>
+</g>
+</svg>
